@@ -1,5 +1,8 @@
 export type Technology = "Каркас" | "Газобетон" | "Керамический блок";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const assetPath = (path: string) => `${basePath}${path}`;
+
 export type Project = {
   id: string;
   title: string;
@@ -57,7 +60,7 @@ export const projects: Project[] = [
     bathrooms: 2,
     technology: "Каркас",
     price: 8900000,
-    image: "/images/projects/lesnoy-128.webp",
+    image: assetPath("/images/projects/lesnoy-128.webp"),
     summary: "Одноэтажный дом с общей кухней-гостиной и крытой террасой.",
     layouts: ["Кухня-гостиная 41 м²", "Мастер-спальня", "Техническая зона у входа"],
     isDemo: true,
@@ -71,7 +74,7 @@ export const projects: Project[] = [
     bathrooms: 3,
     technology: "Керамический блок",
     price: 14800000,
-    image: "/images/hero/sever-dom-hero.webp",
+    image: assetPath("/images/hero/sever-dom-hero.webp"),
     summary: "Выразительный семейный дом с двусветной гостиной и кабинетом.",
     layouts: ["Двусветная гостиная", "Кабинет на первом этаже", "Хозяйский блок"],
     isDemo: true,
@@ -85,7 +88,7 @@ export const projects: Project[] = [
     bathrooms: 2,
     technology: "Газобетон",
     price: 11900000,
-    image: "/images/cases/zimniy-186.webp",
+    image: assetPath("/images/cases/zimniy-186.webp"),
     summary: "Компактный дом с мансардой для участка сложной формы.",
     layouts: ["Спальня на первом этаже", "Три комнаты в мансарде", "Отдельная котельная"],
     isDemo: true,
@@ -99,7 +102,7 @@ export const projects: Project[] = [
     bathrooms: 2,
     technology: "Каркас",
     price: 7200000,
-    image: "/images/projects/lesnoy-128.webp",
+    image: assetPath("/images/projects/lesnoy-128.webp"),
     summary: "Рациональный дом для пары или небольшой семьи.",
     layouts: ["Кухня-гостиная с выходом в сад", "Две спальни", "Постирочная"],
     isDemo: true,
@@ -113,7 +116,7 @@ export const projects: Project[] = [
     bathrooms: 3,
     technology: "Газобетон",
     price: 17200000,
-    image: "/images/hero/sever-dom-hero.webp",
+    image: assetPath("/images/hero/sever-dom-hero.webp"),
     summary: "Просторный дом с гостевым блоком и зоной для работы.",
     layouts: ["Пять спален", "Гостевая на первом этаже", "Кабинет и кладовая"],
     isDemo: true,
@@ -127,7 +130,7 @@ export const projects: Project[] = [
     bathrooms: 2,
     technology: "Керамический блок",
     price: 13700000,
-    image: "/images/cases/zimniy-186.webp",
+    image: assetPath("/images/cases/zimniy-186.webp"),
     summary: "Дом для рельефного участка с панорамной общей зоной.",
     layouts: ["Терраса 28 м²", "Кухня с островом", "Гардеробные при спальнях"],
     isDemo: true,
@@ -146,12 +149,12 @@ export const processSteps = [
 export const cases = [
   {
     title: "Дом у соснового леса",
-    image: "/images/hero/sever-dom-hero.webp",
+    image: assetPath("/images/hero/sever-dom-hero.webp"),
     gallery: [
-      "/images/hero/sever-dom-hero.webp",
-      "/images/projects/lesnoy-128.webp",
-      "/images/cases/zimniy-186.webp",
-      "/images/og/sever-dom-og.webp",
+      assetPath("/images/hero/sever-dom-hero.webp"),
+      assetPath("/images/projects/lesnoy-128.webp"),
+      assetPath("/images/cases/zimniy-186.webp"),
+      assetPath("/images/og/sever-dom-og.webp"),
     ],
     tech: "Каркас",
     area: "186 м²",
@@ -163,12 +166,12 @@ export const cases = [
   },
   {
     title: "Одноэтажный дом в березах",
-    image: "/images/projects/lesnoy-128.webp",
+    image: assetPath("/images/projects/lesnoy-128.webp"),
     gallery: [
-      "/images/projects/lesnoy-128.webp",
-      "/images/cases/zimniy-186.webp",
-      "/images/hero/sever-dom-hero.webp",
-      "/images/og/sever-dom-og.webp",
+      assetPath("/images/projects/lesnoy-128.webp"),
+      assetPath("/images/cases/zimniy-186.webp"),
+      assetPath("/images/hero/sever-dom-hero.webp"),
+      assetPath("/images/og/sever-dom-og.webp"),
     ],
     tech: "Газобетон",
     area: "128 м²",
@@ -180,12 +183,12 @@ export const cases = [
   },
   {
     title: "Зимний дом с кабинетом",
-    image: "/images/cases/zimniy-186.webp",
+    image: assetPath("/images/cases/zimniy-186.webp"),
     gallery: [
-      "/images/cases/zimniy-186.webp",
-      "/images/hero/sever-dom-hero.webp",
-      "/images/projects/lesnoy-128.webp",
-      "/images/og/sever-dom-og.webp",
+      assetPath("/images/cases/zimniy-186.webp"),
+      assetPath("/images/hero/sever-dom-hero.webp"),
+      assetPath("/images/projects/lesnoy-128.webp"),
+      assetPath("/images/og/sever-dom-og.webp"),
     ],
     tech: "Керамический блок",
     area: "192 м²",
