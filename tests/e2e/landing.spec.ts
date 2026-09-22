@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-test("calculator submits a valid mock lead", async ({ page }) => {
+test("calculator validates a lead without transmitting data", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("link", { name: /Рассчитать стоимость/ }).first().click();
   const calculator = page.locator("#cost");
@@ -12,14 +12,14 @@ test("calculator submits a valid mock lead", async ({ page }) => {
   await calculator.getByLabel("Имя").fill("Анна");
   await calculator.getByLabel("Телефон").fill("89991234567");
   await calculator.getByRole("checkbox").check();
-  await calculator.getByRole("button", { name: "Получить подробную смету" }).click();
-  await expect(calculator.getByText(/Заявка принята в демонстрационном режиме/)).toBeVisible({ timeout: 20_000 });
+  await calculator.getByRole("button", { name: "Показать демо-результат" }).click();
+  await expect(calculator.getByText(/данные не были отправлены/)).toBeVisible();
 });
 
 test("empty lead form shows accessible validation errors", async ({ page }) => {
   await page.goto("/#contact");
   const form = page.locator("#contact form");
-  await form.getByRole("button", { name: "Получить расчет" }).click();
+  await form.getByRole("button", { name: "Показать демо-расчет" }).click();
   await expect(form.getByText("Укажите имя")).toBeVisible();
   await expect(form.getByText("Введите российский номер полностью")).toBeVisible();
   await expect(form.getByText("Нужно согласие на обработку данных")).toBeVisible();
