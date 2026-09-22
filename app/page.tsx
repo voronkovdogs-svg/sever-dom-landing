@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowDownRight,
   ArrowUpRight,
@@ -25,6 +26,7 @@ import { WebMcpTools } from "@/components/webmcp-tools";
 import { buildDirections, faqItems, processSteps, siteFacts } from "@/content/site-data";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const jsonLd = [
   {
@@ -79,7 +81,7 @@ export default function Home() {
               </ul>
             </div>
             <div className="hero-visual">
-              <Image src="/images/hero/sever-dom-hero.webp" alt="Современный загородный дом среди сосен и берез" fill priority sizes="(max-width: 900px) 100vw, 52vw" />
+              <Image src={`${basePath}/images/hero/sever-dom-hero.webp`} alt="Современный загородный дом среди сосен и берез" fill priority sizes="(max-width: 900px) 100vw, 52vw" />
               <div className="project-float">
                 <span className="demo-label">Демонстрационный проект</span>
                 <strong>«Северный свет»</strong>
@@ -191,7 +193,7 @@ export default function Home() {
             <div className="contact-copy">
               <p className="eyebrow">Следующий шаг</p>
               <h2 id="contact-title">Получите персональный расчет и подборку проектов</h2>
-              <p>Оставьте ориентиры по дому. В демонстрационном режиме форма вернет номер заявки, но не отправит персональные данные реальной компании.</p>
+              <p>Оставьте ориентиры по дому, чтобы проверить сценарий. В демонстрационном режиме форма валидирует поля локально и никуда не отправляет данные.</p>
               <div className="contact-points">
                 <span><HardHat aria-hidden="true" />Учтем особенности участка</span>
                 <span><BadgeCheck aria-hidden="true" />Покажем состав диапазона</span>
@@ -207,7 +209,7 @@ export default function Home() {
           <div><a className="brand" href="#top"><span className="brand-mark" aria-hidden="true">С</span><span>Север Дом</span></a><p>Демонстрационный проект для портфолио. Компания, контакты и данные вымышлены.</p></div>
           <div><strong>Разделы</strong><a href="#projects">Проекты</a><a href="#cost">Стоимость</a><a href="#process">Как работаем</a><a href="#faq">FAQ</a></div>
           <div><strong>Контакты · демо</strong><a href="tel:+79991234567">+7 (999) 123-45-67</a><a href="mailto:hello@sever-dom.example.com">hello@sever-dom.example.com</a><span>Пн–Сб, 09:00–19:00</span><span>Москва и Московская область</span></div>
-          <div><strong>Документы</strong><a href="/privacy">Политика обработки данных</a><span>© {new Date().getFullYear()} Север Дом</span></div>
+          <div><strong>Документы</strong><Link href="/privacy">Политика обработки данных</Link><span>© {new Date().getFullYear()} Север Дом</span></div>
         </div>
       </footer>
       <FloatingActions />

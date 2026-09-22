@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -12,8 +13,8 @@ export const metadata: Metadata = {
   description:
     "Демонстрационный лендинг: проектирование и строительство современных домов в Москве и Московской области.",
   alternates: { canonical: "/" },
-  icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
-  manifest: "/manifest.webmanifest",
+  icons: { icon: `${basePath}/favicon.svg`, shortcut: `${basePath}/favicon.svg` },
+  manifest: `${basePath}/manifest.webmanifest`,
   openGraph: {
     type: "website",
     locale: "ru_RU",
@@ -21,13 +22,13 @@ export const metadata: Metadata = {
     siteName: "Север Дом",
     title: "Север Дом — дом с прозрачной сметой",
     description: "Проектирование и строительство современных загородных домов. Демонстрационный проект.",
-    images: [{ url: "/images/og/sever-dom-og.webp", width: 1200, height: 630, alt: "Север Дом — дом с прозрачной сметой" }],
+    images: [{ url: `${siteUrl}/images/og/sever-dom-og.webp`, width: 1200, height: 630, alt: "Север Дом — дом с прозрачной сметой" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Север Дом — дом с прозрачной сметой",
     description: "Демонстрационный проект строительной компании.",
-    images: ["/images/og/sever-dom-og.webp"],
+    images: [`${siteUrl}/images/og/sever-dom-og.webp`],
   },
 };
 
