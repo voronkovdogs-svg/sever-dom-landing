@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle2, LoaderCircle } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { formatPhone } from "@/lib/phone";
@@ -16,44 +17,29 @@ type LeadFormProps = {
 };
 
 export function LeadForm({ calculator, compact = false }: LeadFormProps) {
-  const [serverState, setServerState] = useState<{ type: "idle" | "success" | "error"; message?: string }>({ type: "idle" });
+  const [serverState, setServerState] = useState<{ type: "idle" | "success" | "error"; message?: string }>({
+    type: "idle",
+    message: "Демонстрационная форма: данные никуда не отправляются.",
+  });
   const {
     register,
     handleSubmit,
     control,
     setValue,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<LeadInput>({
     resolver: zodResolver(leadSchema),
     defaultValues: { name: "", phone: "", contactMethod: "call", comment: "", consent: false, company: "" },
     shouldFocusError: true,
   });
 
-  const onSubmit = handleSubmit(async (values) => {
-    setServerState({ type: "idle" });
+  const onSubmit = handleSubmit(() => {
     trackEvent("lead_submit", { source: compact ? "calculator" : "contact" });
-    const params = new URLSearchParams(window.location.search);
-    const utm = Object.fromEntries(
-      ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]
-        .map((key) => [key, params.get(key)])
-        .filter((entry): entry is [string, string] => Boolean(entry[1])),
-    );
-    try {
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...values, calculator, utm }),
-      });
-      const result = await response.json() as { ok?: boolean; id?: string; error?: string };
-      if (!response.ok || !result.ok) throw new Error(result.error ?? "Не удалось отправить заявку");
-      setServerState({ type: "success", message: "Заявка принята в демонстрационном режиме. Номер: " + result.id });
-      trackEvent("lead_success", { source: compact ? "calculator" : "contact" });
-      reset();
-    } catch (error) {
-      setServerState({ type: "error", message: error instanceof Error ? error.message : "Произошла ошибка. Попробуйте еще раз." });
-      trackEvent("lead_error", { source: compact ? "calculator" : "contact" });
-    }
+    void calculator;
+    setServerState({ type: "success", message: "Демо готово: форма проверена, но данные не были отправлены." });
+    trackEvent("lead_success", { source: compact ? "calculator" : "contact" });
+    reset();
   });
 
   return (
@@ -135,15 +121,15 @@ export function LeadForm({ calculator, compact = false }: LeadFormProps) {
                 aria-invalid={Boolean(errors.consent)}
                 aria-describedby={errors.consent ? (compact ? "consent-calc-error" : "consent-error") : undefined}
               />
-              <span>Согласен на обработку данных по <a href="/privacy">политике конфиденциальности</a></span>
+              <span>Согласен на обработку данных по <Link href="/privacy">политике конфиденциальности</Link></span>
             </label>
             {errors.consent && <span className="field-error" id={compact ? "consent-calc-error" : "consent-error"}>{errors.consent.message}</span>}
           </div>
         )}
       />
 
-      <button className="button submit-button" type="submit" disabled={isSubmitting}>
-        {isSubmitting ? <><LoaderCircle className="spin" aria-hidden="true" /> Отправляем…</> : compact ? "Получить подробную смету" : "Получить расчет"}
+      <button className="button submit-button" type="submit">
+        {compact ? "Показать демо-результат" : "Показать демо-расчет"}
       </button>
 
       <div className={"form-status " + serverState.type} aria-live="polite" aria-atomic="true">
